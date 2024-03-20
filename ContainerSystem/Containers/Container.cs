@@ -11,7 +11,8 @@ public abstract class Container
     public string SerialNumber { get; set; }
     public double MaxLoad { get; set; }
 
-    protected Container(double cargoMass, double height, double tareWeight, double depth, string serialNumber, double maxLoad)
+    protected Container(double cargoMass, double height, double tareWeight, double depth, string serialNumber,
+        double maxLoad)
     {
         CargoMass = cargoMass;
         Height = height;
@@ -19,16 +20,12 @@ public abstract class Container
         Depth = depth;
         SerialNumber = serialNumber;
         MaxLoad = maxLoad;
-        
+
 
     }
 
-    protected virtual void Load(double cargoWeight)
-    {
-        if (MaxLoad >= cargoWeight + CargoMass)
-        {
-            CargoMass = CargoMass + cargoWeight;
-        } else throw new OverfillException();
-    }
+    public abstract void Load(double cargoWeight);
+
+    public abstract void Empty();
 
 }
