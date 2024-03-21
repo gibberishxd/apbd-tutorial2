@@ -2,27 +2,20 @@ using ContainerSystem.Exceptions;
 
 namespace ContainerSystem.Containers;
 
-public abstract class Container 
+public abstract class Container(
+    double cargoMass,
+    double height,
+    double tareWeight,
+    double depth,
+    string serialNumber,
+    double maxLoad)
 {
-    public double CargoMass { get; set; }
-    public double Height { get; set; }
-    public double TareWeight { get; set; }
-    public double Depth { get; set; }
-    public string SerialNumber { get; set; }
-    public double MaxLoad { get; set; }
-
-    protected Container(double cargoMass, double height, double tareWeight, double depth, string serialNumber,
-        double maxLoad)
-    {
-        CargoMass = cargoMass;
-        Height = height;
-        TareWeight = tareWeight;
-        Depth = depth;
-        SerialNumber = serialNumber;
-        MaxLoad = maxLoad;
-
-
-    }
+    public double CargoMass { get; set; } = cargoMass;
+    public double Height { get; set; } = height;
+    public double TareWeight { get; set; } = tareWeight;
+    public double Depth { get; set; } = depth;
+    public string SerialNumber { get; set; } = serialNumber;
+    public double MaxLoad { get; set; } = maxLoad;
 
     public abstract void Load(double cargoWeight);
 

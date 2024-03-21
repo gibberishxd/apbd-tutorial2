@@ -3,16 +3,18 @@ using ContainerSystem.Interfaces;
 
 namespace ContainerSystem.Containers;
 
-public class GasContainer: Container, IHazardNotifier
+public class GasContainer(
+    double cargoMass,
+    double height,
+    double tareWeight,
+    double depth,
+    string serialNumber,
+    double maxLoad,
+    double pressure)
+    : Container(cargoMass, height, tareWeight, depth, serialNumber, maxLoad), IHazardNotifier
 {
-    public double Pressure;
-    
-    public GasContainer(double cargoMass, double height, double tareWeight, double depth, string serialNumber, double maxLoad, double pressure)
-        : base(cargoMass, height, tareWeight, depth, serialNumber, maxLoad)
-    {
-        Pressure = pressure;
-    }
-    
+    public double Pressure = pressure;
+
     public override void Load(double cargoWeight)
     {
         

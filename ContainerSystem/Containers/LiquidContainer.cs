@@ -2,19 +2,19 @@ using ContainerSystem.Exceptions;
 
 namespace ContainerSystem.Containers;
 
-public class LiquidContainer : Container, Interfaces.IHazardNotifier
+public class LiquidContainer(
+    double cargoMass,
+    double height,
+    double tareWeight,
+    double depth,
+    string serialNumber,
+    double maxLoad,
+    bool isHazardous)
+    : Container(cargoMass, height, tareWeight, depth, serialNumber, maxLoad), Interfaces.IHazardNotifier
 {
-    private bool IsHazardous;
-    
-    public LiquidContainer(double cargoMass, double height, double tareWeight, double depth, string serialNumber, double maxLoad, bool isHazardous)
-        : base(cargoMass, height, tareWeight, depth, serialNumber, maxLoad)
-    {
-        IsHazardous = isHazardous;
-    }
-
     public override void Load(double cargoWeight)
     {
-        if (IsHazardous)
+        if (isHazardous)
         {
             if (cargoWeight <= MaxLoad / 2)
             {
