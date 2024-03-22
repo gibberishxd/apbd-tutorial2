@@ -1,9 +1,8 @@
-using System;
+
 using ContainerSystem;
 using ContainerSystem.Containers;
 using ContainerSystem.Exceptions;
-using System.Collections.Generic;
-using System.Linq;
+
 
 class Program
 {
@@ -34,7 +33,8 @@ class Program
                 Console.WriteLine("8. Replace a container on the ship");
                 Console.WriteLine("9. Print information about a given container");
                 Console.WriteLine("10. Print information about a given ship");
-                Console.WriteLine("11. Exit");
+                Console.WriteLine("11. Transfer containers between ships");
+                Console.WriteLine("12. Exit");
                 Console.Write("Enter your choice: ");
 
                 string choice = Console.ReadLine();
@@ -265,6 +265,59 @@ class Program
                         }
                         break;
                     case "11":
+                        Console.WriteLine("Enter the name of the ship to transfer containers from: ");
+                        foreach (var sh in manager.AllShips)
+                        {
+                            Console.WriteLine(sh.ShipName);
+                        }
+                        string? shipNameFrom = Console.ReadLine();
+                        Console.WriteLine("Enter the name of the ship to transfer containers to: ");
+                        foreach (var sh in manager.AllShips)
+                        {
+                            if (sh.ShipName != shipNameFrom)
+                            {
+                                Console.WriteLine(sh.ShipName);
+                            }
+                        }
+                        
+                        string? shipNameTo = Console.ReadLine();
+                        
+                        ContainerShip shipFrom = manager.GetShipByName(shipNameFrom);
+                        ContainerShip shipTo = manager.GetShipByName(shipNameTo);
+                        
+                        if (shipFrom != null && shipTo != null)
+                        {
+                            Console.WriteLine("Enter the serial numbers of the containers to transfer (comma-separated): ");
+                            foreach (var cont in shipFrom.Containers)
+                            {
+                                Console.WriteLine(cont.SerialNumber);
+                            }
+                            string[] serialNumbersTransfer = Console.ReadLine()!.Split(',');
+                            List<Container> containersToTransfer = new List<Container>();
+                            foreach (var serialNumber in serialNumbersTransfer)
+                            {
+                                Container selectedCont = manager.GetContainerBySerialNumber(serialNumber);
+                                if (selectedCont != null)
+                                {
+                                    containersToTransfer.Add(selectedCont);
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"Container {serialNumber} not found.");
+                                }
+                            }
+                            manager.TransferContainersBetweenShips(containersToTransfer, shipFrom, shipTo);
+                        }
+                        else
+                        {
+                            Console.WriteLine("One or both ships not found.");
+                        }
+                        
+                        
+                        
+                        break;
+                        
+                    case "12":
                         return;
                     default:
                         Console.WriteLine("Invalid choice. Please try again.");

@@ -142,6 +142,17 @@ namespace ContainerSystem
         {
             return "Ship " + AllShips.Count;
         }
+        
+        public void TransferContainersBetweenShips(List<Container> containersToTransfer, ContainerShip shipFrom, ContainerShip shipTo)
+        {
+            foreach (var container in containersToTransfer)
+            {
+                shipFrom.UnloadContainer(container);
+                shipTo.AddContainer(container);
+            }
+            Console.WriteLine($"Transferred {containersToTransfer.Count} containers from {shipFrom.ShipName} to {shipTo.ShipName}");
+        }
+        
 
 
         private Container CreateLiquidContainer()
